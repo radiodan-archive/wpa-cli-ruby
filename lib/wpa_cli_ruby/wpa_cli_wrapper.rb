@@ -3,11 +3,11 @@ module WpaCliRuby
     def initialize
     end
 
-    def scan
+    def self.scan
       `wpa_cli scan`
     end
 
-    def scan_results
+    def self.scan_results
       `wpa_cli scan_results`
     end
   end
