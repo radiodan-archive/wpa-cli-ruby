@@ -8,10 +8,10 @@ Gem::Specification.new do |spec|
   spec.version       = WpaCliRuby::VERSION
   spec.authors       = ["Chris Lowis"]
   spec.email         = ["chris.lowis@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{A ruby wrapper for the wpa_cli command line utility}
+  spec.summary       = %q{A ruby wrapper for the wpa_cli command line utility}
   spec.homepage      = ""
-  spec.license       = "MIT"
+  spec.license       = "Apache"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
