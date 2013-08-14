@@ -1,7 +1,9 @@
 module WpaCliRuby
+  class EnableNetworkFailure < Exception; end
+  class SetNetworkFailure < Exception; end
+
   class WpaCli
     class ScanResult < Struct.new(:bssid, :frequency, :signal_level, :flags, :ssid)
-
       def initialize(*args)
         super(*args)
         self.signal_level = self.signal_level.to_i
@@ -16,19 +18,53 @@ module WpaCliRuby
       end
     end
 
-    def scan
-      response = WpaCliWrapper.scan
+    class Response < Struct.new(:interface, :status)
+      def ok?
+        status == "OK"
+      end
+    end
 
-      interface_response, status_response = response.split("\n")
-      interface = interface_response.scan(/'(.*)'/).flatten.first
-      status = :ok if status_response == "OK"
-      return interface, status
+    def initialize(wrapper = WpaCliWrapper.new)
+      @wrapper = wrapper
+    end
+
+    def scan
+      response = @wrapper.scan
+      parse_interface_status_response(response)
     end
 
     def scan_results
-      response = WpaCliWrapper.scan_results
+      response = @wrapper.scan_results
       interface, header, *results = response.split("\n")
       results.map { |result| ScanResult.from_string(result) }
+    end
+
+    def add_network
+      response = @wrapper.add_network
+      network_id = response.to_i
+    end
+
+    def set_network(network_id, key, value)
+      response = @wrapper.set_network(network_id, key, value)
+      response = parse_interface_status_response(response)
+      raise SetNetworkFailure unless response.ok?
+
+      response
+    end
+
+    def enable_network(network_id)
+      response = @wrapper.enable_network(network_id)
+      response = parse_interface_status_response(response)
+      raise EnableNetworkFailure unless response.ok?
+
+      response
+    end
+
+    private
+    def parse_interface_status_response(response)
+      interface_response, status = response.split("\n")
+      interface = interface_response.scan(/'(.*)'/).flatten.first
+      Response.new(interface, status)
     end
   end
 end
