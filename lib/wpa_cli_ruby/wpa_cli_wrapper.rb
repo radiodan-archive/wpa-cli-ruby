@@ -1,7 +1,7 @@
 module WpaCliRuby
   class WpaCliWrapper
     def execute(cmd)
-      %x[cmd]
+      %x[#{cmd}]
     end
 
     def scan
