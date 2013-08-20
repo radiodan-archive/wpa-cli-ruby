@@ -18,7 +18,21 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    require 'wpa_cli_ruby'
+
+    wpa_cli = WpaCli.new
+
+    # Get a list of available Wifi access points
+    wpa_cli.scan
+    scan_results = wpa_cli.scan_results
+
+    # Connect to the first network
+    network_id = wpa_cli.add_network
+    wpa_cli.set_network(network_id, "ssid", scan_results.first.ssid)
+    wpa_cli.set_network(network_id, "psk", "password")
+
+    # Enable the network to connect immediately
+    wpa_cli.enable_network(network_id)
 
 ## Contributing
 
