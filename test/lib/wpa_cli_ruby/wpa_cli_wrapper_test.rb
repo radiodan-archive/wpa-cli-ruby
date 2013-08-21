@@ -47,4 +47,10 @@ describe WpaCliRuby do
     end
   end
 
+  describe "save_config" do
+    it "calls execute with the correct string" do
+      @wrapper.expects(:execute).with("wpa_cli save_config")
+      @wrapper.save_config
+    end
+  end
 end

@@ -2,6 +2,7 @@ module WpaCliRuby
   class EnableNetworkFailure < Exception; end
   class SetNetworkFailure < Exception; end
   class NetworkNotFound < Exception; end
+  class SaveConfigFailure < Exception; end
 
   class WpaCli
     class ScanResult < Struct.new(:bssid, :frequency, :signal_level, :flags, :ssid)
@@ -49,6 +50,14 @@ module WpaCliRuby
       response = @wrapper.set_network(network_id, key, value)
       response = parse_interface_status_response(response)
       raise SetNetworkFailure unless response.ok?
+
+      response
+    end
+
+    def save_config
+      response = @wrapper.save_config
+      response = parse_interface_status_response(response)
+      raise SaveConfigFailure unless response.ok?
 
       response
     end

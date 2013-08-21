@@ -33,5 +33,10 @@ module WpaCliRuby
       cmd = "wpa_cli enable_network #{network_id}"
       execute(cmd)
     end
+
+    def save_config
+      cmd = "wpa_cli save_config"
+      execute(cmd)
+    end
   end
 end

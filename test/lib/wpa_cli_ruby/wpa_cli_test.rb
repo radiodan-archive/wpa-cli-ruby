@@ -33,6 +33,18 @@ describe WpaCliRuby do
     end
   end
 
+  describe "save_config" do
+    before do
+      @wrapper.expects(:save_config).returns("Selected interface 'wlan0'\nOK\n")
+    end
+
+    it "returns the interface and the status code" do
+      response = @wpa_cli.save_config
+      assert_equal 'wlan0', response.interface
+      assert response.ok?
+    end
+  end
+
   describe "set_network" do
     it "returns the interface and the status code" do
       @wrapper.expects(:set_network).with(0, 'test', 'test').returns("Selected interface 'wlan0'\nOK\n")
