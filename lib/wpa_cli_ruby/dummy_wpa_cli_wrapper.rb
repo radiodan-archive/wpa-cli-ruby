@@ -26,6 +26,10 @@ eos
       "Selected interface 'wlan0'\nOK\n"
     end
 
+    def get_network(network_id, key)
+      raise NetworkNotFound
+    end
+
     def enable_network(network_id)
       "Selected interface 'wlan0'\nOK\n"
     end
