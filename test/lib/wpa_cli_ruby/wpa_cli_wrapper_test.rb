@@ -33,6 +33,13 @@ describe WpaCliRuby do
     end
   end
 
+  describe "get_network" do
+    it "calls execute with the correct string" do
+      @wrapper.expects(:execute).with("wpa_cli get_network 0 ssid")
+      @wrapper.get_network(0, 'ssid')
+    end
+  end
+
   describe "enable_network" do
     it "calls execute with the correct string" do
       @wrapper.expects(:execute).with("wpa_cli enable_network 0")

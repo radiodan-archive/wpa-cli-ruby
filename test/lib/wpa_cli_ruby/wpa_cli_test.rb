@@ -48,6 +48,20 @@ describe WpaCliRuby do
     end
   end
 
+  describe "get_network" do
+    it "returns the ssid" do
+      @wrapper.expects(:get_network).with(0, 'ssid').returns("Selected interface 'wlan0'\nssid1")
+
+      ssid = @wpa_cli.get_network(0, 'ssid')
+      assert_equal 'ssid1', ssid
+    end
+
+    it "raises for unknown network" do
+      @wrapper.expects(:get_network).with(1, 'ssid').returns("Selected interface 'wlan0'\nFAIL\n")
+      assert_raises(WpaCliRuby::NetworkNotFound) { @wpa_cli.get_network(1, 'ssid') }
+    end
+  end
+
   describe "enable_network" do
     it "returns the interface and the status code for successful enabling" do
       @wrapper.expects(:enable_network).with(0).returns("Selected interface 'wlan0'\nOK\n")
