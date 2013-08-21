@@ -33,5 +33,9 @@ eos
     def enable_network(network_id)
       "Selected interface 'wlan0'\nOK\n"
     end
+
+    def save_config
+      "Selected interface 'wlan0'\nOK\n"
+    end
   end
 end
