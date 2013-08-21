@@ -24,12 +24,12 @@ describe WpaCliRuby do
 
   describe "add_network" do
     before do
-      @wrapper.expects(:add_network).returns("0")
+      @wrapper.expects(:add_network).returns("Selected interface 'wlan0'\n10\n")
     end
 
     it "returns the interface and the status code" do
       network_id = @wpa_cli.add_network
-      assert_equal 0, network_id
+      assert_equal 10, network_id
     end
   end
 

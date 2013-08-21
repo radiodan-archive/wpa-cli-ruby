@@ -43,7 +43,8 @@ module WpaCliRuby
 
     def add_network
       response = @wrapper.add_network
-      network_id = response.to_i
+      _, status = response.split("\n")
+      network_id = status.to_i
     end
 
     def set_network(network_id, key, value)
