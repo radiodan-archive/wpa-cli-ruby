@@ -4,6 +4,10 @@ module WpaCliRuby
       %x[#{cmd}]
     end
 
+    def self.available?
+      system("which wpa_cli > /dev/null 2>&1")
+    end
+
     def scan
       cmd = "wpa_cli scan"
       execute(cmd)

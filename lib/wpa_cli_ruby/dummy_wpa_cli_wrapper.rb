@@ -3,6 +3,11 @@
 # environments that do not have/support wpa_cli
 module WpaCliRuby
   class DummyWpaCliWrapper
+
+    def self.available?
+      true
+    end
+
     def scan
       "Selected interface 'wlan0'\nOK\n"
     end
