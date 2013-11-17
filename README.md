@@ -31,6 +31,9 @@ Or install it yourself as:
     wpa_cli.set_network(network_id, "ssid", scan_results.first.ssid)
     wpa_cli.set_network(network_id, "psk", "password")
 
+    # You can pass tokens to wpa supplicant using symbols
+    wpa_cli.set_network(network_id, "key_mgmt", :NONE)
+
     # Enable the network to connect immediately
     wpa_cli.enable_network(network_id)
 

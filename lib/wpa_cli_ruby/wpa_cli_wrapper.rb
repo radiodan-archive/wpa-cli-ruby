@@ -24,7 +24,8 @@ module WpaCliRuby
     end
 
     def set_network(network_id, key, value)
-      cmd = "wpa_cli set_network #{network_id} #{key} '\"#{value}\"'"
+      value = "\"#{value}\"" unless value.is_a? Symbol
+      cmd = "wpa_cli set_network #{network_id} #{key} '#{value}'"
       execute(cmd)
     end
 

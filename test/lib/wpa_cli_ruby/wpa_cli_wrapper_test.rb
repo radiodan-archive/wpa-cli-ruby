@@ -31,6 +31,10 @@ describe WpaCliRuby do
       @wrapper.expects(:execute).with("wpa_cli set_network 0 ssid '\"network_ssid\"'")
       @wrapper.set_network(0, 'ssid', 'network_ssid')
     end
+    it "treats symbols as unquoted values" do
+      @wrapper.expects(:execute).with("wpa_cli set_network 0 key_mgmt 'NONE'")
+      @wrapper.set_network(0, 'key_mgmt', :NONE)
+    end
   end
 
   describe "get_network" do
