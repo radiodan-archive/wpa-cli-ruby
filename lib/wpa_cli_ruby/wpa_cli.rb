@@ -20,6 +20,19 @@ module WpaCliRuby
       end
     end
 
+    class ListNetworkResult < Struct.new(:network_id, :ssid, :bssid, :flags)
+      def initialize(*args)
+        super(*args)
+      end
+
+      # Instantiate from a tab delimited string (as given by `wpa_cli list_networks`)
+      #
+      # @param [String] tab delimited string in the form network_id\tssid\tbssid\tflags
+      def self.from_string(string)
+        new(*string.split("\t"))
+      end
+    end
+
     class Response < Struct.new(:interface, :status)
       def ok?
         status == "OK"
@@ -40,6 +53,12 @@ module WpaCliRuby
       interface, header, *results = response.split("\n")
       results.map { |result| ScanResult.from_string(result) }
     end
+
+	def list_networks
+	  resonse = @wrapper.list_networks
+	  interface, header, *results = response.split("\n")
+      results.map { |result| ListNetworkResult.from_string(result) }
+	end
 
     def add_network
       response = @wrapper.add_network
@@ -79,6 +98,13 @@ module WpaCliRuby
 
       response
     end
+
+	def get_status
+	  response = @wrapper.status
+	  #TODO: Add parsing
+
+	  response
+	end
 
     private
     def parse_interface_status_response(response)
