@@ -27,17 +27,17 @@ module WpaCliRuby
     end
 
     def set_network(network_id, key, value)
-      value = "\"#{value}\"" unless value.is_a? Symbol
-      execute("set_network", network_id, key, value)
+      value_s = "\"#{value}\"" unless value.is_a? Symbol
+      execute("set_network", "#{network_id}", key, value_s)
     end
 
     def get_network(network_id, key)
 
-      execute("get_network", network_id, key)
+      execute("get_network", "#{network_id}", key)
     end
 
     def enable_network(network_id)
-      execute("enable_network", network_id)
+      execute("enable_network", "#{network_id}")
     end
 
     def save_config
