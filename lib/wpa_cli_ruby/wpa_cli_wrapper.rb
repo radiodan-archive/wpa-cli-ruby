@@ -1,8 +1,5 @@
 module WpaCliRuby
   class WpaCliWrapper
-    #def execute(cmd)
-    #  %x[#{cmd}]
-    #end
     
     def execute(*args)
       IO.popen(["wpa_cli"] + args) do |io|
