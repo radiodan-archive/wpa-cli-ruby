@@ -5,7 +5,7 @@ module WpaCliRuby
     #end
     
     def execute(*args)
-      IO.popen("wpa_cli", "r", *args) do |io|
+      IO.popen(["wpa_cli"] + args) do |io|
         io.read
       end
     end
