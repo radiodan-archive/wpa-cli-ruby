@@ -55,7 +55,7 @@ module WpaCliRuby
     end
 
 	def list_networks
-	  resonse = @wrapper.list_networks
+	  response = @wrapper.list_networks
 	  interface, header, *results = response.split("\n")
       results.map { |result| ListNetworkResult.from_string(result) }
 	end
