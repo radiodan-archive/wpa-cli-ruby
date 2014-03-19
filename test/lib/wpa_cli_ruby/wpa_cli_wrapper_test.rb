@@ -57,4 +57,18 @@ describe WpaCliRuby do
       @wrapper.save_config
     end
   end
+
+  describe "list_networks" do
+    it "calls execute with correct string" do
+      @wrapper.expects(:execute).with("list_networks")
+      @wrapper.list_networks
+    end
+  end
+
+  describe "status" do
+    it "calls execute with correct string" do
+      @wrapper.expects(:execute).with("status")
+      @wrapper.status
+    end
+  end
 end

@@ -54,11 +54,11 @@ module WpaCliRuby
       results.map { |result| ScanResult.from_string(result) }
     end
 
-	def list_networks
-	  response = @wrapper.list_networks
-	  interface, header, *results = response.split("\n")
-      results.map { |result| ListNetworkResult.from_string(result) }
-	end
+    def list_networks
+      response = @wrapper.list_networks
+      interface, header, *results = response.split("\n")
+        results.map { |result| ListNetworkResult.from_string(result) }
+    end
 
     def add_network
       response = @wrapper.add_network
@@ -99,12 +99,11 @@ module WpaCliRuby
       response
     end
 
-	def get_status
-	  response = @wrapper.status
-	  #TODO: Add parsing
-
-	  response
-	end
+  def get_status
+    response = @wrapper.status
+    #TODO: Add parsing
+    response
+  end
 
     private
     def parse_interface_status_response(response)

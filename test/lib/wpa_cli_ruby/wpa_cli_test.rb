@@ -110,6 +110,8 @@ eos
       assert_equal 2437, scan_results[0].frequency
 
       assert_equal 'ssid2', scan_results[1].ssid
+      assert_equal -57, scan_results[1].signal_level
+      assert_equal 2412, scan_results[1].frequency
     end
   end
 end

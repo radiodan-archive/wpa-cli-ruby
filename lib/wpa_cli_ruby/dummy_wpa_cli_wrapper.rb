@@ -42,5 +42,14 @@ eos
     def save_config
       "Selected interface 'wlan0'\nOK\n"
     end
+
+    def list_networks
+      response = <<-eos
+Selected interface 'wlan0'
+network id / ssid / bssid / flags
+0	My Awesome Network	any	[CURRENT]
+eos
+	  end
+
   end
 end
