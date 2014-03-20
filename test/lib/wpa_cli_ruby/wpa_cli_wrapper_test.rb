@@ -65,10 +65,10 @@ describe WpaCliRuby do
     end
   end
 
-  describe "status" do
+  describe "get_status" do
     it "calls execute with correct string" do
       @wrapper.expects(:execute).with("status")
-      @wrapper.status
+      @wrapper.get_status
     end
   end
 end

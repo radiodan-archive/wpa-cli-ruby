@@ -39,6 +39,26 @@ module WpaCliRuby
       end
     end
 
+    class StatusResponse
+      attr_reader :interface
+
+      def initialize(iface, items)
+        @interface = iface
+        @items = items
+      end
+
+      def method_missing(meth, *args, &block)
+        if not @items[meth.to_s].nil?
+          # run_find_by_method($1, *args, &block)
+          @items[meth.to_s]
+        else
+          super # You *must* call super if you don't handle the
+                # method, otherwise you'll mess up Ruby's method
+                # lookup.
+        end
+      end
+    end
+
     def initialize(wrapper = WpaCliWrapper.new)
       @wrapper = wrapper
     end
@@ -57,7 +77,7 @@ module WpaCliRuby
     def list_networks
       response = @wrapper.list_networks
       interface, header, *results = response.split("\n")
-        results.map { |result| ListNetworkResult.from_string(result) }
+      results.map { |result| ListNetworkResult.from_string(result) }
     end
 
     def add_network
@@ -99,17 +119,23 @@ module WpaCliRuby
       response
     end
 
-  def get_status
-    response = @wrapper.status
-    #TODO: Add parsing
-    response
-  end
+    def get_status
+      response = @wrapper.get_status
+      parse_status_response(response)
+    end
 
     private
     def parse_interface_status_response(response)
       interface_response, status = response.split("\n")
       interface = interface_response.scan(/'(.*)'/).flatten.first
       Response.new(interface, status)
+    end
+
+    def parse_status_response(response)
+      interface_response, *status = response.split("\n")
+      interface = interface_response.scan(/'(.*)'/).flatten.first
+      status_items = Hash[status.map{|s| s.split("=")}]
+      StatusResponse.new(interface, status_items)
     end
   end
 end

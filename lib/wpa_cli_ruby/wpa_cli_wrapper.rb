@@ -44,7 +44,7 @@ module WpaCliRuby
       execute("save_config")
     end
   
-    def status
+    def get_status
       execute("status")
     end
 
