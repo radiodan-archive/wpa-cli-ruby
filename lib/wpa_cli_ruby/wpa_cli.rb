@@ -1,5 +1,6 @@
 module WpaCliRuby
   class EnableNetworkFailure < Exception; end
+  class SelectNetworkFailure < Exception; end
   class SetNetworkFailure < Exception; end
   class NetworkNotFound < Exception; end
   class SaveConfigFailure < Exception; end
@@ -115,6 +116,14 @@ module WpaCliRuby
       response = @wrapper.enable_network(network_id)
       response = parse_interface_status_response(response)
       raise EnableNetworkFailure unless response.ok?
+
+      response
+    end
+
+    def select_network(network_id)
+      response = @wrapper.select_network(network_id)
+      response = parse_interface_status_response(response)
+      raise SelectNetworkFailure unless response.ok?
 
       response
     end

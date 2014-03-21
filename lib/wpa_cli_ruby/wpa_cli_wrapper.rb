@@ -39,6 +39,10 @@ module WpaCliRuby
     def enable_network(network_id)
       execute("enable_network", "#{network_id}")
     end
+    
+    def select_network(network_id)
+      execute("select_network", "#{network_id}")
+    end
 
     def save_config
       execute("save_config")
