@@ -133,6 +133,10 @@ module WpaCliRuby
       parse_status_response(response)
     end
 
+    def set_ap_scan(val)
+      @wrapper.set_ap_scan(val)
+    end
+
     private
     def parse_interface_status_response(response)
       interface_response, status = response.split("\n")

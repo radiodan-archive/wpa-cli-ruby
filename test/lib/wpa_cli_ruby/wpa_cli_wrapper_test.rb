@@ -71,4 +71,11 @@ describe WpaCliRuby do
       @wrapper.get_status
     end
   end
+
+  describe "set_ap_scan" do
+    it "calls execute with correct value" do
+      @wrapper.expects(:execute).with("ap_scan", "1")
+      @wrapper.set_ap_scan(1)
+    end
+  end
 end

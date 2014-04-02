@@ -52,5 +52,9 @@ module WpaCliRuby
       execute("status")
     end
 
+    def set_ap_scan(val)
+      execute("ap_scan", val.to_s)
+    end
+
   end
 end
