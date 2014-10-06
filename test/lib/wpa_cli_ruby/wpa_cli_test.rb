@@ -90,6 +90,10 @@ describe WpaCliRuby do
     end
   end
 
+  describe "list_networks" do
+    
+  end
+
   describe "scan_results" do
     before do
       response = <<-eos
@@ -110,6 +114,90 @@ eos
       assert_equal 2437, scan_results[0].frequency
 
       assert_equal 'ssid2', scan_results[1].ssid
+      assert_equal -57, scan_results[1].signal_level
+      assert_equal 2412, scan_results[1].frequency
     end
+  end
+
+  describe "get_status" do
+
+    describe "when disconnected" do
+      before do
+        response = <<-eos
+Selected interface 'wlan0'
+wpa_state=DISCONNECTED
+address=80:1f:02:94:4c:f3
+eos
+        @wrapper.expects(:get_status).returns(response)
+      end
+
+      it "returns interface value of wlan0" do
+        status = @wpa_cli.get_status
+        assert_equal "wlan0", status.interface 
+      end
+
+      it "returns wpa_state value of DISCONNECTED" do
+        # status_results = @wpa_cli.status
+        status = @wpa_cli.get_status
+        assert_equal "DISCONNECTED", status.wpa_state
+      end
+
+      it "returns address value of 80:1f:02:94:4c:f3" do
+        status = @wpa_cli.get_status
+        assert_equal "80:1f:02:94:4c:f3", status.address
+      end
+
+    end
+
+    describe "when connected to a WPA2 network" do
+      before do
+        response = <<-eos
+Selected interface 'wlan1'
+bssid=64:0f:29:09:6d:d9
+ssid=A Great Network
+id=0
+mode=station
+pairwise_cipher=CCMP
+group_cipher=TKIP
+key_mgmt=WPA2-PSK
+wpa_state=COMPLETED
+ip_address=192.168.11.105
+address=80:1f:02:94:4c:f3
+eos
+        @wrapper.expects(:get_status).returns(response)
+      end
+
+      it "returns interface value of wlan1" do
+        status = @wpa_cli.get_status
+        assert_equal "wlan1", status.interface 
+      end
+
+      it "returns id value of 0" do
+        status = @wpa_cli.get_status
+        assert_equal "0", status.id 
+      end
+
+      it "returns wpa_state value of COMPLETED" do
+        status = @wpa_cli.get_status
+        assert_equal "COMPLETED", status.wpa_state 
+      end
+
+      it "returns ssid value of A Great Network" do
+        status = @wpa_cli.get_status
+        assert_equal "A Great Network", status.ssid 
+      end
+
+      it "returns group_cipher value of TKIP" do
+        status = @wpa_cli.get_status
+        assert_equal "TKIP", status.group_cipher 
+      end
+
+      it "returns key_mgmt value of WPA2-PSK" do
+        status = @wpa_cli.get_status
+        assert_equal "WPA2-PSK", status.key_mgmt 
+      end
+
+    end
+
   end
 end
